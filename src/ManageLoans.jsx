@@ -12,7 +12,7 @@ function ManageLoans({ books = [], loans = [], setLoans, onBack }) {
     function handleBorrow(bookId) {
         const borrowDate = new Date();
         const dueDate = new Date(borrowDate);
-        dueDate.setDate(dueDate.getDate() + 30); // 30 days from borrow date
+        dueDate.setDate(dueDate.getDate() + 30);
         
         const newLoan = {
             id: `loan-${Date.now()}`,
@@ -40,7 +40,12 @@ function ManageLoans({ books = [], loans = [], setLoans, onBack }) {
 
     return (
         <div className="manage-loans-container">
-            <h2 className="loans-header">Manage Loans</h2>
+            <div className="loans-header-section">
+                <h2 className="loans-header">Manage Loans</h2>
+                <button className="back-to-catalog-btn" onClick={onBack}>
+                    Back to Catalog
+                </button>
+            </div>
 
             <div className="loans-content">
                 <div className="available-books-section">

@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import AddNew from "./AddNew.jsx";
 import ManageLoans from "./ManageLoans.jsx";
+import BookDetailsPage from "./BookDetailsPage.jsx";
 
 
 function Filter({ books, onFilterChange }) {
@@ -36,31 +37,51 @@ function AddNewWrapper() {
     const [selectedBookId, setSelectedBookId] = useState(null);
     const [selectedAuthor, setSelectedAuthor] = useState(null);
     const [loans, setLoans] = useState([]);
-    const [currentView, setCurrentView] = useState('catalog'); // 'catalog' or 'loans'
+    const [currentView, setCurrentView] = useState('catalog'); // 'catalog', 'loans', or 'details'
+    const [viewingBookId, setViewingBookId] = useState(null);
 
     const filteredBooks = selectedAuthor
         ? books.filter(book => book.author === selectedAuthor)
         : books;
 
+    const viewingBook = books.find(b => b.id === viewingBookId);
+
+    const handleViewDetails = (bookId) => {
+        setViewingBookId(bookId);
+        setCurrentView('details');
+    };
+
+    const handleBackFromDetails = () => {
+        setViewingBookId(null);
+        setCurrentView('catalog');
+    };
+
     return (
-        <>
+        <div className='bookList'>
             <div >
                 <h1 className='title'>BOOK CATALOG</h1>
                 <div className='line'> </div>
                 <div className='top-bar'>
-                    <button 
-                        className="manage-loans-btn" 
-                        onClick={() => setCurrentView(currentView === 'catalog' ? 'loans' : 'catalog')}
-                    >
-                        {currentView === 'catalog' ? 'Manage Loans' : 'Back to Catalog'}
-                    </button>
                     {currentView === 'catalog' && (
-                        <Filter books={books} onFilterChange={setSelectedAuthor} />
+                        <>
+                            <button 
+                                className="manage-loans-btn" 
+                                onClick={() => setCurrentView('loans')}
+                            >
+                                Manage Loans
+                            </button>
+                            <Filter books={books} onFilterChange={setSelectedAuthor} />
+                        </>
                     )}
                 </div>
             </div>
 
-            {currentView === 'catalog' ? (
+            {currentView === 'details' ? (
+                <BookDetailsPage 
+                    book={viewingBook} 
+                    onBack={handleBackFromDetails}
+                />
+            ) : currentView === 'catalog' ? (
                 <div className='allContent'>
                     <div className='books'>
                         <div className='griding'>
@@ -71,17 +92,16 @@ function AddNewWrapper() {
                                     onSelect={(bookId) => setSelectedBookId(bookId)}
                                     selectedBookId={selectedBookId}
                                     loans={loans}
+                                    onViewDetails={handleViewDetails}
                                 />
                             ))}
+                            <AddNew
+                                books={books}
+                                setBooks={setBooks}
+                                selectedBookId={selectedBookId}
+                                setSelectedBookId={setSelectedBookId}
+                            />
                         </div>
-                    </div>
-                    <div className='controls-section'>
-                        <AddNew
-                            books={books}
-                            setBooks={setBooks}
-                            selectedBookId={selectedBookId}
-                            setSelectedBookId={setSelectedBookId}
-                        />
                     </div>
                 </div>
             ) : (
@@ -92,18 +112,16 @@ function AddNewWrapper() {
                     onBack={() => setCurrentView('catalog')}
                 />
             )}
-        </>
-    );
-}
-
-createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <div className='bookList'>
-            <AddNewWrapper />
 
             <footer className='footer'>
                 <p>@Wing Yan Sophia Wan, 2025 </p>
             </footer>
         </div>
+    );
+}
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <AddNewWrapper />
     </StrictMode>
 );

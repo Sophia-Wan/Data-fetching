@@ -1,11 +1,14 @@
 .bookdetails {
     border: 1px solid black;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
+    padding: 8px;
     position: relative;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .bookdetails:hover {
@@ -19,22 +22,25 @@
     padding: 8px;
     font-weight: bold;
     font-size: 14px;
-   margin-left: -8px;
-   margin-right: -8px;
-   margin-top: -8px;
-  
-
+    margin-left: -8px;
+    margin-right: -8px;
+    margin-top: -8px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
 }
 img {
     width: 100%;
 }
-.listing {
+.listings {
     align-items: center;
+    flex-shrink: 0;
 }
 .details {
     text-align: center;
-    padding-bottom: 10px;
-    font-size: 16px;
+    font-size: 12px;
+
 }
 
 h4 {
@@ -93,4 +99,27 @@ p {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.view-details-btn {
+    width: 100%;
+    padding: 4px 10px;
+    background-color: rgb(220, 202, 219);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    box-sizing: border-box;
+
+}
+
+.view-details-btn:hover {
+    background-color: rgb(200, 180, 199);
+}
+
+.view-details-btn:active {
+    background-color: rgb(180, 160, 179);
 }

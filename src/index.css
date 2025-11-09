@@ -17,14 +17,13 @@
 
 .books {
     display: flex;
-    gap: 30px;
 }
 .griding {
     display: grid;
-    grid-template-columns: 1fr auto auto auto;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     padding-bottom: 50px;
-    flex-wrap: wrap;
+    width: 100%;
 }
 .footer {
     text-align: center;
@@ -87,7 +86,7 @@ input[type="number"] {
 /* Make cards rendered inside the grid match the .new button size */
 .griding .container {
     width: 200px;
-    height: 260px;
+    height: 300px;
     box-sizing: border-box;
     display: flex;
     align-items: stretch;
@@ -101,6 +100,12 @@ input[type="number"] {
     flex-direction: column;
     justify-content: space-between;
     padding: 8px;
+}
+
+.griding .controls {
+    width: 200px;
+    height: 300px;
+    box-sizing: border-box;
 }
 
 .filter{

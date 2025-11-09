@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App(props) {
-    const { id, image, img, price, author, title, onSelect, selectedBookId, loans = [] } = props;
+    const { id, image, img, price, author, title, onSelect, selectedBookId, loans = [], onViewDetails } = props;
 
     const isSelected = selectedBookId === id;
     
@@ -19,6 +19,13 @@ function App(props) {
         }
     }
 
+    function handleViewDetails(e) {
+        e.stopPropagation(); // Prevent triggering the parent's onClick
+        if (onViewDetails) {
+            onViewDetails(id);
+        }
+    }
+
     const imgSrc = image || img || "";
 
     return (
@@ -31,6 +38,7 @@ function App(props) {
                 {isOnLoan && (
                     <div className="on-loan-banner">On loan</div>
                 )}
+                
                 <div className='listings'>
                     {imgSrc ? <img src={imgSrc} alt={title || "book"} /> : null}
                 </div>
@@ -38,6 +46,12 @@ function App(props) {
                     {price !== undefined && <p>${price}</p>}
                     <p className='author'>by: {author || ""}</p>
                 </div>
+                <button 
+                    className="view-details-btn" 
+                    onClick={handleViewDetails}
+                >
+                    View Details
+                </button>
             </div>
         </div>
     );
@@ -45,4 +59,3 @@ function App(props) {
 
 
 export default App;
-
